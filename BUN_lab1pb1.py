@@ -38,15 +38,11 @@ def determinare_luna_zi(ord_zi, an):
 
     bisect = verificare_an_bisect(an)
     total_zile_luna = 0
-    total_luna_precedenta = 0
     for luna in luni_an:
         total_luna_precedenta = total_zile_luna
         total_zile_luna += get_days_in_month(luna, bisect)
         if ord_zi < total_zile_luna:
-            if luni_an == luni_an[0]:
-                afisare_data(an, luna, ord_zi)
-            else:
-                afisare_data(an, luna, ord_zi - total_luna_precedenta)
+            afisare_data(an, luna, ord_zi - total_luna_precedenta)
             break
 
 
