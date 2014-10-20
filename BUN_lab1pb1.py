@@ -3,13 +3,24 @@
 # din anul respectiv
 
 
-def verificare_an_bisect(an):
-    return an % 4 == 0
+def verify_leap_year(year):
+    """
+    Verify if an year is a leap year
+    :param year:int
+    :return:bool
+    """
+    return year % 4 == 0
 
 
-def get_days_in_month(luna, bisect):
+def get_days_in_month(month, leap_year):
+    """
+    Generate days in month.
+    :param month: string
+    :param bisect: int
+    :return: int
+    """
     feb_days = 28
-    if bisect:
+    if leap_year:
         feb_days += 1
     return {
         'ianuarie': 31,
@@ -24,33 +35,46 @@ def get_days_in_month(luna, bisect):
         'octombrie': 31,
         'noiembrie': 30,
         'decembrie': 31
-    }[luna]
+    }[month]
 
 
-def afisare_data(an, luni_an, zi):
-    print("Anul:{}  Luna:{}  Ziua:{}".format(an, luni_an, zi))
+def date_display(year, years_month, day):
+    """
+    Print the calendar date on the screen.
+    :param year:int
+    :param years_month:str
+    :param day:int
+    :return:
+    """
+    print("Anul:{}  Luna:{}  Ziua:{}".format(year, years_month, day))
 
 
-def determinare_luna_zi(ord_zi, an):
-    luni_an = ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie',
+def get_date(nr_of_the_day, year):
+    """
+    Return the calendar date for the input day and year.
+    :param nr_of_the_day:int
+    :param year:int
+    :return:
+    """
+    years_month = ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie',
                'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie',
                'decembrie']
 
-    bisect = verificare_an_bisect(an)
-    total_zile_luna = 0
-    for luna in luni_an:
-        total_luna_precedenta = total_zile_luna
-        total_zile_luna += get_days_in_month(luna, bisect)
-        if ord_zi < total_zile_luna:
-            afisare_data(an, luna, ord_zi - total_luna_precedenta)
+    leap_year = verify_leap_year(year)
+    total_days_month = 0
+    for month in years_month:
+        total_previous_month = total_days_month
+        total_days_month += get_days_in_month(month, leap_year)
+        if nr_of_the_day < total_days_month:
+            date_display(year, month, nr_of_the_day - total_previous_month)
             break
 
 
 def main():
     print("Dati anul si numarul de ordine al zilei")
-    an = int(input("an="))
-    ord_zi = int(input("numarul de ordine al zilei="))
-    determinare_luna_zi(ord_zi, an)
+    year = int(input("an="))
+    nr_of_the_day = int(input("numarul de ordine al zilei="))
+    get_date(nr_of_the_day, year)
 
 
 if __name__ == "__main__":
